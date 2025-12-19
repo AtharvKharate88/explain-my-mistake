@@ -13,10 +13,11 @@ export default function Explain() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!email || !password) {
+    if (!content || !type) {
         alert("All fields required");
         return;
     }
+
 
     axios
       .post(
