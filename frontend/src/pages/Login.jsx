@@ -23,6 +23,8 @@ export default function Login() {
       .then((res) => {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("userId", res.data.userId);
+        localStorage.setItem("email", email);
+
 
         // ✅ REAL redirect
         navigate("/explain");
