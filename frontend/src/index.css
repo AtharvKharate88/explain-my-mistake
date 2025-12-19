@@ -1,0 +1,114 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Body */
+body {
+  background-color: #f4f6f8;
+  color: #333;
+  padding: 20px;
+}
+
+/* Navbar */
+nav {
+  background-color: #ffffff;
+  padding: 12px 20px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+nav a {
+  text-decoration: none;
+  color: #007bff;
+  margin-right: 10px;
+  font-weight: 500;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+nav button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+nav button:hover {
+  background-color: #b52a37;
+}
+
+/* Page container */
+div {
+  max-width: 700px;
+  margin: auto;
+}
+
+/* Headings */
+h1 {
+  margin-bottom: 15px;
+}
+
+h3 {
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+/* Forms */
+form {
+  background-color: white;
+  padding: 20px;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+textarea {
+  resize: vertical;
+}
+
+/* Buttons */
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Result sections */
+section {
+  background-color: white;
+  padding: 15px;
+  margin-top: 15px;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* History items */
+hr {
+  margin: 15px 0;
+}
