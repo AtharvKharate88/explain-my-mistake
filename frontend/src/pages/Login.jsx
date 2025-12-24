@@ -21,7 +21,8 @@ export default function Login() {
         password,
       })
       .then((res) => {
-        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("accessToken", res.data.accessToken);
+        localStorage.setItem("refreshToken", res.data.refreshToken);
         localStorage.setItem("userId", res.data.userId);
         localStorage.setItem("email", email);
 
@@ -35,32 +36,39 @@ export default function Login() {
   };
 
   return (
-    <div>
-      <h1>Login</h1>
+    <div className="page-container fade-in">
+      <h1>Welcome Back</h1>
 
       <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          value={email}
-          placeholder="enter email"
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+        <div className="form-group">
+          <label htmlFor="email">Email Address</label>
+          <input
+            id="email"
+            type="email"
+            value={email}
+            placeholder="Enter your email"
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
 
-        <input
-          type="password"
-          value={password}
-          placeholder="enter password"
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+        <div className="form-group">
+          <label htmlFor="password">Password</label>
+          <input
+            id="password"
+            type="password"
+            value={password}
+            placeholder="Enter your password"
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
 
-        <button type="submit">Submit</button>
+        <button type="submit">Sign In</button>
       </form>
 
-      {/* This is where <Link> belongs */}
-      <p>
-        New user? <Link to="/signup">Signup</Link>
+      <p className="text-center">
+        New user? <Link to="/signup">Create an account</Link>
       </p>
     </div>
   );

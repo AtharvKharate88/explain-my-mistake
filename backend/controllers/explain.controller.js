@@ -1,97 +1,49 @@
-const model = require("../utils/ai");
-const Explanation = require("../models/Explanation");
-const mongoose = require("mongoose");
+const asyncHandler = require("../middleware/asyncHandler");
+const {
+  generateExplanation,
+  generateHistory,
+} = require("../services/explain.service");
+const AppError=require("../utils/AppError");
 
-const explainContent = async (req, res) => {
+
+const explainContent =asyncHandler( async (req, res) => {
   const { content, type } = req.body;
+  const userId = req.userId;
 
-  if (!content || !type) {
-    return res.status(400).json({ message: "content and type are required" });
-  }
+  // Controller does only HTTP-level checks
+  
 
-  if (content.length > 3000) {
-    return res.status(400).json({ message: "Content too long" });
-  }
-  if (!req.userId) {
-  return res.status(401).json({ message: "Unauthorized" });
-}
-
-
-  try {
-    const prompt = `
-You are a senior software engineer and teacher.
-
-Analyze the following ${type}:
-
-${content}
-
-Respond STRICTLY in this format:
-
-WHAT_IS_WRONG:
-<text>
-
-CORRECT_APPROACH:
-<text>
-
-MENTAL_MODEL:
-<text>
-`;
-
-    // ✅ GEMINI CALL (FREE)
-    const result = await model.generateContent(prompt);
-
-    const aiText = result.response.text();
-
-    if (!aiText) {
-      return res.status(500).json({ message: "Empty AI response" });
-    }
-
-    // 🔍 PARSING LOGIC (UNCHANGED)
-    const extract = (label) => {
-      const regex = new RegExp(`${label}:([\\s\\S]*?)(?=\\n[A-Z_]+:|$)`);
-      const match = aiText.match(regex);
-      return match ? match[1].trim() : "";
-    };
-    const airesponse = {
-      whatIsWrong: extract("WHAT_IS_WRONG"),
-      correctApproach: extract("CORRECT_APPROACH"),
-      mentalModel: extract("MENTAL_MODEL"),
-    };
-
-    // 🔐 SAVE WITH OWNERSHIP
-    const explanation = await Explanation.create({
-      userId: req.userId,
+  
+    const explanation = await generateExplanation(
+      userId,
       content,
-      type,
-      airesponse,
-    });
+      type
+    );
 
     res.status(201).json({
       message: "Explanation generated",
       explanation,
     });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "AI failed" });
-  }
-};
+  
+});
 
-const explainContentHistory = async (req, res) => {
-  try {
-    const userId = req.userId;
-    const history = await Explanation.find({ userId }).sort({ createdAt: -1 });
-    Explanation.find({ userId: req.userId })
-      .sort({ createdAt: -1 })
-      .limit(20)
+const explainContentHistory = asyncHandler(async (req, res) => {
+  const page = Number(req.query.page) || 1;
+  const limit = Math.min(Number(req.query.limit) || 10, 50);
+  const history = await generateHistory(
+    req.userId,
+    page,
+    limit
+  );
 
-    res.json({ history });
-    
-  } catch (error) {
-    res.status(500).json({
-      message: "Failed to fetch history",
-    });
-  }
-};
+  res.json({
+    page,
+    limit,
+    count: history.length,
+    history,
+  });
+});
+
 
 module.exports = {
   explainContent,

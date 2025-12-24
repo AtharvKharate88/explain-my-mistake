@@ -7,7 +7,7 @@ import History from "./pages/History";
 import Navbar from "./components/Navbar";
 
 function App() {
-  const isLoggedIn = localStorage.getItem("token");
+  const isLoggedIn = localStorage.getItem("accessToken");
 
   return (
     <BrowserRouter>

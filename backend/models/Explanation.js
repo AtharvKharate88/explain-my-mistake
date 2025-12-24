@@ -24,7 +24,11 @@ const explanationSchema = mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-});
+},{
+    timestamps: true, // 🔥 THIS LINE FIXES YOUR BUG
+  });
+explanationSchema.index({ userId: 1, createdAt: -1 });
+
 
 const Explanation = mongoose.model("Explanation", explanationSchema);
 
