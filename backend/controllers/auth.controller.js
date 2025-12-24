@@ -54,12 +54,8 @@ const login =asyncHandler( async (req, res) => {
       throw new AppError("Invalid credentials", 401);
     }
 
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
-    });
-
-     const accessToken = generateAccessToken({ userId: user._id });
-     const refreshToken = generateRefreshToken({ userId: user._id });
+    const accessToken = generateAccessToken({ userId: user._id });
+    const refreshToken = generateRefreshToken({ userId: user._id });
 
   // 🔐 store refresh token
     user.refreshToken = refreshToken;
@@ -122,10 +118,10 @@ const logout = asyncHandler(async (req, res) => {
   if (user) {
     user.refreshToken = null;
     await user.save();
+    logger.info("User logged out", {
+      userId: user._id,
+    });
   }
-  logger.info("User logged out", {
-    userId: user._id,
-  });
 
   res.json({ message: "Logged out successfully" });
 });
