@@ -29,40 +29,30 @@ export default function Signup() {
   };
 
   return (
-    <div className="page-container fade-in">
-      <h1>Create Account</h1>
+    <div>
+      <h1>Signup</h1>
 
+      {/* 🔥 onSubmit added */}
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="email">Email Address</label>
-          <input
-            id="email"
-            type="email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
+        <input
+          type="email"
+          placeholder="enter email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
 
-        <div className="form-group">
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            placeholder="Create a password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
+        <input
+          type="password"
+          placeholder="enter password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
 
-        <button type="submit">Create Account</button>
+        {/* 🔥 type submit */}
+        <button type="submit">Signup</button>
       </form>
-
-      <p className="text-center">
-        Already have an account? <Link to="/login">Sign in</Link>
-      </p>
     </div>
   );
 }

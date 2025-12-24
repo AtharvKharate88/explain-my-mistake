@@ -36,39 +36,32 @@ export default function Login() {
   };
 
   return (
-    <div className="page-container fade-in">
-      <h1>Welcome Back</h1>
+    <div>
+      <h1>Login</h1>
 
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="email">Email Address</label>
-          <input
-            id="email"
-            type="email"
-            value={email}
-            placeholder="Enter your email"
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
+        <input
+          type="email"
+          value={email}
+          placeholder="enter email"
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
 
-        <div className="form-group">
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            value={password}
-            placeholder="Enter your password"
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
+        <input
+          type="password"
+          value={password}
+          placeholder="enter password"
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
 
-        <button type="submit">Sign In</button>
+        <button type="submit">Submit</button>
       </form>
 
-      <p className="text-center">
-        New user? <Link to="/signup">Create an account</Link>
+      {/* This is where <Link> belongs */}
+      <p>
+        New user? <Link to="/signup">Signup</Link>
       </p>
     </div>
   );

@@ -15,26 +15,19 @@ const Navbar = () => {
   };
   
   return (
-    <nav>
-      <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-        <Link to="/" style={{ fontSize: "1.25rem", fontWeight: "700" }}>
-          CodeDebugger
-        </Link>
-      </div>
-      <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-        {token ? (
-          <>
-            <Link to="/explain">Explain</Link>
-            <Link to="/history">History</Link>
-            <button onClick={handleLogout} className="danger">Logout</button>
-          </>
-        ) : (
-          <>
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Signup</Link>
-          </>
-        )}
-      </div>
+    <nav style={{ marginBottom: "20px" }}>
+      {token ? (
+        <>
+          <Link to="/explain">Explain</Link>{" | "}
+          <Link to="/history">History</Link>{" | "}
+          <button onClick={handleLogout}>Logout</button>
+        </>
+      ) : (
+        <>
+          <Link to="/login">Login</Link>{" | "}
+          <Link to="/signup">Signup</Link>
+        </>
+      )}
     </nav>
   );
 };

@@ -22,7 +22,6 @@ export default function Explain() {
     }
 
     setLoading(true);
-    setError("");
     axiosInstance
       .post(
         `${import.meta.env.VITE_API_URL}/api/explain`,
@@ -33,10 +32,9 @@ export default function Explain() {
       )
       .then((res) => {
         setResult(res.data.explanation.airesponse);
-        localStorage.setItem("lastExplanation", JSON.stringify(res.data.explanation.airesponse));
       })
       .catch(() => {
-        setError("Failed to explain. Please try again.");
+        setError("explain failed")
       })
       .finally(() => {
         setLoading(false);
@@ -44,66 +42,55 @@ export default function Explain() {
   };
 
   return (
-    <div className="page-container fade-in">
-      <h1>Explain My Mistake</h1>
-      <p className="text-center text-muted" style={{ marginBottom: "2rem" }}>
-        Get detailed explanations for your coding mistakes and learn the correct approach
-      </p>
+    <div>
+      <h1>Explain my mistake</h1>
 
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="content">Your Code or Logic</label>
-          <textarea
-            id="content"
-            placeholder="Paste your code, theory question, or logic problem here..."
-            rows="8"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            required
-          />
-        </div>
+        <textarea
+          placeholder="Paste your wrong code / logic here"
+          rows="6"
+          cols="60"
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+        />
 
-        <div className="form-group">
-          <label htmlFor="type">Type</label>
-          <select 
-            id="type"
-            value={type} 
-            onChange={(e) => setType(e.target.value)}
-          >
-            <option value="code">Code</option>
-            <option value="theory">Theory</option>
-            <option value="logic">Logic</option>
-          </select>
-        </div>
+        <br />
 
-        <button type="submit" disabled={loading}>
-          {loading ? "Analyzing..." : "Explain My Mistake"}
-        </button>
-        {error && <div className="error-message">{error}</div>}
+        <select value={type} onChange={(e) => setType(e.target.value)}>
+          <option value="code">Code</option>
+          <option value="theory">Theory</option>
+          <option value="logic">Logic</option>
+        </select>
+
+        <br /><br />
+
+        <button type="submit" disabled={loading}>{loading ? "Explaining..." : "Explain"}</button>
+        {error && <p style={{color:"red"}}>{error}</p>}
       </form>
 
+      <hr />
+
       {!result.whatIsWrong ? (
-        <div className="card empty-state">
-          <p>👆 Submit your content above to get a detailed explanation</p>
-        </div>
-      ) : (
-        <div className="fade-in">
-          <section>
-            <h3>🔍 What's Wrong</h3>
-            <p>{result.whatIsWrong}</p>
-          </section>
+        <p>Submit content to see explanation.</p>
+    ) : (
+    <>
+    <section>
+      <h3>What is wrong</h3>
+      <p>{result.whatIsWrong}</p>
+    </section>
 
-          <section>
-            <h3>✅ Correct Approach</h3>
-            <p>{result.correctApproach}</p>
-          </section>
+    <section>
+      <h3>Correct approach</h3>
+      <p>{result.correctApproach}</p>
+    </section>
 
-          <section>
-            <h3>🧠 Mental Model</h3>
-            <p>{result.mentalModel}</p>
-          </section>
-        </div>
-      )}
+    <section>
+      <h3>Mental model</h3>
+      <p>{result.mentalModel}</p>
+    </section>
+  </>
+)}
+
     </div>
   );
 }
